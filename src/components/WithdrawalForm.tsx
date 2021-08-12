@@ -36,7 +36,7 @@ const WithdrawalForm = ({currentBalance}: IWithdrawalForm) => {
         <Input
           id="amount"
           type="number"
-          placeholder="****"
+          placeholder="0"
           {...register("amount", {
             required: "This is required",
           })}
