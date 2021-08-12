@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
+import ATMForm from "./components/ATMForm";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -32,6 +33,8 @@ export const App = () => (
             Learn Chakra
           </Link>
         </VStack>
+
+        <ATMForm/>
       </Grid>
     </Box>
   </ChakraProvider>
