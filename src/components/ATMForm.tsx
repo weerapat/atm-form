@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useState} from "react";
 import {
   FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
-  Button
+  Button,
+  Alert,
+  AlertIcon
 } from "@chakra-ui/react";
+import LoginAPI from "../api/LoginAPI";
+
+const loginAPI = new LoginAPI();
 
 export default function ATMForm() {
   const {
@@ -14,13 +19,17 @@ export default function ATMForm() {
     register,
     formState: { errors, isSubmitting }
   } = useForm();
-  function onSubmit(values: any) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        resolve();
-      }, 2000);
-    });
+
+  const [loginError, setLoginError] = useState<string | null>(null);
+   const onSubmit = async ({pin}: { pin: number }) => {
+
+   try {
+     const currentBalance = await loginAPI.login(pin);
+     console.log(currentBalance)
+     setLoginError(null)
+   } catch (e) {
+     setLoginError(e.response.data.error)
+   }
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,6 +52,10 @@ export default function ATMForm() {
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
         Submit
       </Button>
+      {loginError && <Alert status="error">
+        <AlertIcon />
+        {loginError}
+      </Alert>}
     </form>
   );
 }
