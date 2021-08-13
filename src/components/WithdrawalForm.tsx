@@ -8,24 +8,35 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-interface IWithdrawalForm {
-  currentBalance: number;
+class BankAccount {
+  protected balance: number;
+
+  constructor(balance: number) {
+    this.balance = balance;
+  }
+
+  public withdraw() {
+    return {
+      ten: 20,
+      five: 5,
+    }
+  }
 }
 
-const WithdrawalForm = ({currentBalance}: IWithdrawalForm) => {
+interface IWithdrawalForm {
+  currentBalance: number;
+  onWithdraw: (amount: number) => void;
+}
+
+const WithdrawalForm = ({currentBalance, onWithdraw}: IWithdrawalForm) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting }
   } = useForm();
 
-  const onSubmit = (values: any) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        resolve();
-      }, 2000);
-    });
+  const onSubmit = ({ amount }: any) => {
+    onWithdraw(amount);
   }
 
   return (

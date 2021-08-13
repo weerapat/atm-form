@@ -12,10 +12,9 @@ import {
 
 interface ILoginForm {
   onSubmit: ({pin}: { pin: number }) => void
-  loginError: string | null;
 }
 
-const LoginForm = ({ onSubmit, loginError }: ILoginForm) => {
+const LoginForm = ({ onSubmit }: ILoginForm) => {
   const {
     handleSubmit,
     register,
@@ -43,10 +42,6 @@ const LoginForm = ({ onSubmit, loginError }: ILoginForm) => {
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
         Submit
       </Button>
-      {loginError && <Alert status="error">
-        <AlertIcon />
-        {loginError}
-      </Alert>}
     </form>
   );
 }
