@@ -1,13 +1,11 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import React, { useState} from "react";
 import {
   FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
   Button,
-  Alert,
-  AlertIcon
 } from "@chakra-ui/react";
 
 interface ILoginForm {
@@ -40,7 +38,7 @@ const LoginForm = ({ onSubmit }: ILoginForm) => {
         </FormErrorMessage>
       </FormControl>
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Submit
+        Login
       </Button>
     </form>
   );

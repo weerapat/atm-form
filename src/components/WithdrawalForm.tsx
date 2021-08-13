@@ -8,21 +8,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-class BankAccount {
-  protected balance: number;
-
-  constructor(balance: number) {
-    this.balance = balance;
-  }
-
-  public withdraw() {
-    return {
-      ten: 20,
-      five: 5,
-    }
-  }
-}
-
 interface IWithdrawalForm {
   currentBalance: number;
   onWithdraw: (amount: number) => void;
@@ -41,7 +26,7 @@ const WithdrawalForm = ({currentBalance, onWithdraw}: IWithdrawalForm) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      Balance: {currentBalance}
+      Available balance: £{currentBalance}
       <FormControl isInvalid={errors.pin}>
         <FormLabel htmlFor="pin">Amount</FormLabel>
         <Input
