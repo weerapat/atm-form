@@ -17,11 +17,13 @@ const WithdrawalForm = ({currentBalance, onWithdraw}: IWithdrawalForm) => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting }
   } = useForm();
 
   const onSubmit = ({ amount }: any) => {
     onWithdraw(amount);
+    reset({ amount: '' })
   }
 
   return (
