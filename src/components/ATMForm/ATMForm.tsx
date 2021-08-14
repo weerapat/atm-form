@@ -1,21 +1,26 @@
 import React, { useState} from "react";
-import LoginAPI from "../api/LoginAPI";
+import LoginAPI from "../../api/LoginAPI";
 import LoginForm from "./LoginForm";
 import WithdrawalForm from "./WithdrawalForm";
 import { useToast, Box } from "@chakra-ui/react"
-import PoundNoteStorage from "../lib/notestorage/PoundNoteStorage";
-import BankAccount from "../lib/BankAccount";
+import PoundNoteStorage from "../../lib/notestorage/PoundNoteStorage";
+import BankAccount from "../../lib/BankAccount";
+import {INote} from "../../lib/notestorage/types";
 
 const loginAPI = new LoginAPI();
 const bankAccount = new BankAccount(new PoundNoteStorage());
 
 const ATMForm = () => {
+  const overdraft = 100;
   const toast = useToast()
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
   const [currentBalance, setCurrentBalance] = useState<number>(0);
 
   const handleWithdraw = (amount: number) => {
     try {
+      if (currentBalance - amount < -overdraft ) {
+        throw new Error('exceeded balance')
+      }
       const notes = bankAccount.withdraw(amount);
       setCurrentBalance(currentBalance - amount);
 
@@ -25,7 +30,7 @@ const ATMForm = () => {
         render: () => (
           <Box color="white" p={3} bg="blue.500">
             <h2>Withdraw successfully.</h2>
-            {notes.map(({note, number}: {note: string, number: number}) => (
+            {notes.map(({note, number}: INote) => (
               <div key={note}>{note} {number}</div>
             ))}
             total: £{amount}

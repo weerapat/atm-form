@@ -1,4 +1,4 @@
-import { INote, NoteStorage } from "./interface";
+import { INote, NoteStorage } from "./types";
 
 export default class PoundNoteStorage implements NoteStorage {
   readonly noteValues: Record<string, number> = {
@@ -23,7 +23,8 @@ export default class PoundNoteStorage implements NoteStorage {
   }
 
   /**
-   * Returns
+   * Calculate the number of banknotes from a given amount
+   *
    * @param amount
    * @param notes
    * @private
@@ -47,7 +48,7 @@ export default class PoundNoteStorage implements NoteStorage {
       return returnNotes;
     }
 
-    throw Error('Has not enough notes');
+    throw new Error('Has not enough notes');
   }
 
   private decreaseNote(note: string, number: number) {
