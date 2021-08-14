@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import LoginAPI from "../../api/LoginAPI";
 import LoginForm from "./LoginForm";
 import WithdrawalForm from "./WithdrawalForm";
-import { useToast, Box } from "@chakra-ui/react"
+import { useToast, Box, Tbody, Table, Thead, Th, Tr, Td  } from "@chakra-ui/react"
 import PoundNoteStorage from "../../lib/notestorage/PoundNoteStorage";
 import BankAccount from "../../lib/BankAccount";
 import {INote} from "../../lib/notestorage/types";
@@ -27,13 +27,27 @@ const ATMForm = () => {
 
       toast({
         status: "success",
-        duration: 10000,
+        duration: 8000,
         render: () => (
-          <Box color="white" p={3} bg="green.500">
+          <Box p={3} borderWidth="2px" borderRadius="lg" border="teal.500">
             <h2>Withdraw successfully.</h2>
-            {notes.map(({note, number}: INote) => (
-              <div key={note}>{note} {number}</div>
-            ))}
+
+            <Table my={4} variant="simple" size="sm">
+              <Thead>
+                <Tr>
+                  <Th>Note</Th>
+                  <Th>Number</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {notes.map(({note, number}: INote) => (
+                  <Tr key={note}>
+                    <Td>{note}</Td>
+                    <Td>{number}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
             total: £{amount}
           </Box>
         ),

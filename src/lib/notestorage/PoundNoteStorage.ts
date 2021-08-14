@@ -16,7 +16,7 @@ export default class PoundNoteStorage implements NoteStorage {
   getNotes(amount: number): INote[] {
     const notes = this.calculateNotes(amount, {...this.notes});
 
-    notes.forEach(({ note, number }: { note: string; number: number }) =>
+    notes.forEach(({ note, number }: INote) =>
       this.decreaseNote(note, number))
 
     return notes
