@@ -48,7 +48,7 @@ export default class PoundNoteStorage implements NoteStorage {
       return returnNotes;
     }
 
-    throw new Error('ATM doesn\'t have enough notes');
+    throw new Error('ATM doesn\'t have enough notes, please try again with tens digits');
   }
 
   private decreaseNote(note: string, number: number) {

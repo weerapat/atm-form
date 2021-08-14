@@ -6,6 +6,7 @@ import {
   FormControl,
   Input,
   Button,
+  Box,
 } from "@chakra-ui/react";
 
 interface IWithdrawalForm {
@@ -28,7 +29,9 @@ const WithdrawalForm = ({currentBalance, onWithdraw}: IWithdrawalForm) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      Available balance: £{currentBalance}
+      <Box mb={4} textAlign="center">
+        Available balance: £{currentBalance}
+      </Box>
       <FormControl isInvalid={errors.pin}>
         <FormLabel htmlFor="amount">Amount</FormLabel>
         <Input

@@ -6,13 +6,14 @@ import { useToast, Box } from "@chakra-ui/react"
 import PoundNoteStorage from "../../lib/notestorage/PoundNoteStorage";
 import BankAccount from "../../lib/BankAccount";
 import {INote} from "../../lib/notestorage/types";
+import FormBlock from "../common/FormBlock";
 
 const loginAPI = new LoginAPI();
 const bankAccount = new BankAccount(new PoundNoteStorage());
 
 const ATMForm = () => {
   const overdraft = 100;
-  const toast = useToast()
+  const toast = useToast();
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
   const [currentBalance, setCurrentBalance] = useState<number>(0);
 
@@ -26,9 +27,9 @@ const ATMForm = () => {
 
       toast({
         status: "success",
-        duration: 15000,
+        duration: 10000,
         render: () => (
-          <Box color="white" p={3} bg="blue.500">
+          <Box color="white" p={3} bg="green.500">
             <h2>Withdraw successfully.</h2>
             {notes.map(({note, number}: INote) => (
               <div key={note}>{note} {number}</div>
@@ -66,12 +67,16 @@ const ATMForm = () => {
 
   if (!loginStatus) {
     return (
-      <LoginForm onSubmit={handleLoginSubmit}/>
+      <FormBlock heading="Login">
+        <LoginForm onSubmit={handleLoginSubmit}/>
+      </FormBlock>
     );
   }
 
   return (
-    <WithdrawalForm currentBalance={currentBalance} onWithdraw={handleWithdraw} />
+    <FormBlock heading="Withdrawal">
+      <WithdrawalForm currentBalance={currentBalance} onWithdraw={handleWithdraw} />
+    </FormBlock>
   );
 }
 
