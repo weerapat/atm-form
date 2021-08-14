@@ -1,4 +1,4 @@
-import { NoteStorage } from "./notestorage/interface";
+import { NoteStorage } from "./notestorage/types";
 
 export default class BankAccount {
   protected noteStorage: NoteStorage;
