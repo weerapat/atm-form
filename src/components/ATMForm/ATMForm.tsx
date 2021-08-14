@@ -19,7 +19,7 @@ const ATMForm = () => {
   const handleWithdraw = (amount: number) => {
     try {
       if (currentBalance - amount < -overdraft ) {
-        throw new Error('exceeded balance')
+        throw new Error('Exceeding the available balance')
       }
       const notes = bankAccount.withdraw(amount);
       setCurrentBalance(currentBalance - amount);

@@ -30,7 +30,7 @@ const WithdrawalForm = ({currentBalance, onWithdraw}: IWithdrawalForm) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       Available balance: £{currentBalance}
       <FormControl isInvalid={errors.pin}>
-        <FormLabel htmlFor="pin">Amount</FormLabel>
+        <FormLabel htmlFor="amount">Amount</FormLabel>
         <Input
           id="amount"
           type="number"

@@ -38,7 +38,7 @@ const LoginForm = ({ onSubmit }: ILoginForm) => {
         </FormErrorMessage>
       </FormControl>
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Login
+        Submit
       </Button>
     </form>
   );
