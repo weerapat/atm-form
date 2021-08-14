@@ -11,4 +11,9 @@ describe('BankAccount', () => {
       { note: '£5', number: 1 }
     ]);
   });
+
+  it('throws an error when given amount is not match with existing notes', () => {
+    const noteStorage = new PoundNoteStorage();
+    expect(() => noteStorage.getNotes(111)).toThrow('ATM doesn\'t have enough notes');
+  });
 });
