@@ -1,5 +1,5 @@
 export interface NoteStorage {
-  readonly noteValues: Record<string, number>
+  readonly noteValues: INoteValue[]
 
   getNotes(amount: number): INote[];
 }
@@ -7,4 +7,9 @@ export interface NoteStorage {
 export interface INote {
   note: string;
   number: number;
+}
+
+export interface INoteValue {
+  name: string;
+  value: number;
 }

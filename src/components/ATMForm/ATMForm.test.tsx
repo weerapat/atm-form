@@ -70,6 +70,6 @@ describe('ATMForm', () => {
     await userEvent.type(getByLabelText(/Amount/i), '256')
     userEvent.click(getByRole('button', {name: /withdraw/i}))
 
-    expect(await findByText('ATM doesn\'t have enough notes, please try again with tens digits')).toBeInTheDocument()
+    expect(await findByText('ATM doesn\'t have banknotes that match your withdrawal amount, please try again')).toBeInTheDocument()
   })
 })

@@ -1,11 +1,12 @@
-import { INote, NoteStorage } from "./types";
+import { INote, INoteValue, NoteStorage } from "./types";
+import { shuffle } from "../utils";
 
 export default class PoundNoteStorage implements NoteStorage {
-  readonly noteValues: Record<string, number> = {
-    '£20': 20,
-    '£10': 10,
-    '£5': 5,
-  }
+  readonly noteValues: INoteValue[] = [
+    { name: '£20', value: 20 },
+    { name: '£10', value: 10 },
+    { name: '£5', value: 5 },
+  ];
 
   protected notes: Record<string, number> = {
     '£5': 4,
@@ -25,30 +26,45 @@ export default class PoundNoteStorage implements NoteStorage {
   /**
    * Calculate the number of banknotes from a given amount
    *
-   * @param amount
-   * @param notes
+   * @param requiredAmount
+   * @param remainingNotes
    * @private
    */
-  private calculateNotes(amount: number, notes: Record<string, number>): INote[] | never  {
+  private calculateNotes(requiredAmount: number, remainingNotes: Record<string, number>): INote[] | never  {
     const returnNotes: INote[] = [];
+    let collectedNotes: Record<string, number> = {};
 
-    for (const noteValue in this.noteValues) {
-      if (amount >= this.noteValues[noteValue]) {
-        let noteNumber = Math.floor(amount / this.noteValues[noteValue]);
-        noteNumber = noteNumber < notes[noteValue] ? noteNumber : notes[noteValue];
+    while (requiredAmount !== 0) {
+      // Shuffle randomly banknotes order.
+      const shuffledNotes = shuffle(this.noteValues);
+      let foundNote = false;
 
-        if (noteNumber) {
-          returnNotes.push({note: noteValue, number: noteNumber})
-          amount = amount - (noteNumber * this.noteValues[noteValue]);
+      for (const {name, value} of shuffledNotes) {
+        // If found a matching note, collect it and exit from the loop.
+        if (remainingNotes[name] > 0 && value <= requiredAmount) {
+          foundNote = true
+
+          if (collectedNotes[name]) {
+            collectedNotes[name] = collectedNotes[name] + 1;
+          } else {
+            collectedNotes[name] = 1;
+          }
+
+          requiredAmount = requiredAmount - value;
+          break;
         }
+      }
+
+      if (!foundNote) {
+        throw new Error('ATM doesn\'t have banknotes that match your withdrawal amount, please try again');
       }
     }
 
-    if (!amount) {
-      return returnNotes;
+    for (const collectedNote in collectedNotes) {
+      returnNotes.push({note: collectedNote, number: collectedNotes[collectedNote]})
     }
 
-    throw new Error('ATM doesn\'t have enough notes, please try again with tens digits');
+    return returnNotes;
   }
 
   private decreaseNote(note: string, number: number) {
